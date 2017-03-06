@@ -1,0 +1,35 @@
+一、Linux下Git和GitHub环境的搭建
+（1）安装Git，使用命令 “sudo apt-get install git”
+（2）自己在GitHub网站上创建账号
+（3）生成ssh key，使用命令 “ssh-keygen -t rsa -C "your_email@youremail.com"”，your_email是你的email。
+如果有一个提示是否覆盖的选项，选择y，这样才能成功，最后会出现SSHkey的图形表示。
+（4）在github网站上，回到github，进入Settings，左边选择SSH and GPG Keys，Add SSH Key,title填写一个有标志性的即可，根据刚刚ssh key生成的路径，
+cat一下，复制粘贴到里面就可以了
+（5）测试ssh key是否成功，使用命令“ssh -T git@github.com”，如果出现You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。如果有其他提示什么，看着办就行了。
+（6）配置Git的配置文件，username和email
+git config --global user.name "your name" //配置用户名
+git config --global user.email "your email" //配置email 
+
+二、创建一个库的步骤：（首先在网页上创建一个test1的库）
+1.首先为这个库建立一个文件夹，然后进去文件夹中，mkdir test1 && cd test1
+2.以对应的标志建立README文件,echo "# test1" >> README.md
+3.git init
+4.git add README.md
+5.git commit -m "first commit"
+6.git remote add origin https://github.com/ThomasWork/test1.git
+7.git push -u origin master
+在最后一步需要输入用户名和密码：ThomasWork，常用密码
+
+三、常用命令
+git status可以查看当前状态（-s）
+git add A B C，可以添加文件A、B和C到缓存区，也可以使用git add .添加文件夹中的所有文件
+git commit -m "提交注释"，可以将缓存区中的文件提交，如果在add文件之后，修改了该文件，
+然后又提交了缓存区，那么可以使用git checkout 文件名，来取消修改。
+git commit -am "提交注释",如果不使用m参数的话，git会给你一个输入框输入信息。
+git reset 文件名，可以取消在缓存区中的文件。
+最后使用git push可以更新库，需要输入用户名和密码。
+
+四、克隆库
+在某个文件夹下，使用命令git clone url（这个链接可以在那个库的页面中复制得到），
+然后会创建一个和那个库同名的文件夹，然后就在这个里面。
+然后使用git pull命令，可以更新为最新的状态。
