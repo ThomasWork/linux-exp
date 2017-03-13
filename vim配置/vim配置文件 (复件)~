@@ -1,0 +1,34 @@
+
+
+"set scrolloff=10			"设置始终距离底部多少行
+
+"set textwidth=80            " 设置每行20个字符自动换行
+"set fo+=Mm                  " 中文40个字换行
+
+set smartindent             " 开启新行时使用智能自动缩进，但是缩进长度为8
+
+set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格，（不然删除tab键需要一下）
+
+"set autoindent              " 继承前一行的缩进方式，特别适用于多行注释
+
+
+":map命令，可以将键盘上的某个按键与Vim的命令绑定起来。例如使用以下命令，可以通过F5键将单词用花括号括起来：
+":map <F5> i{<Esc>ea}<Esc>，注意这里呢，因为已经{补全了，所以会多一个}
+
+"返回操作系统类型(Windows, Linux等)
+function! MySys()
+    if has("win16") || has("win32") || has("win64") || has("win95")
+        return "windows"
+    elseif has("unix")
+        return "linux"
+    endif
+endfunction
+
+" 用户目录变量$VIMFILES
+if MySys() == "windows"
+    let $VIMFILES = $VIM.'/vimfiles'
+elseif MySys() == "linux"
+    let $VIMFILES = $HOME.'/.vim'
+endif
+
+

@@ -1,0 +1,67 @@
+set nocompatible            " 关闭 vi 兼容模式
+set ruler                   " 打开状态栏标尺
+set laststatus=2            " 显示状态栏 (默认值为 1, 当前行号和列号和操作模式显示在最后一行)
+set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\
+                            " 设置在状态行显示的信息
+
+syntax on                   " 自动语法高亮
+set number                  " 显示行号
+colorscheme desert          " 设定配色方案
+
+"set textwidth=80            " 设置每行20个字符自动换行
+"set fo+=Mm                  " 中文40个字换行
+
+set smartindent             " 开启新行时使用智能自动缩进，但是缩进长度为8
+set tabstop=4               " 设定 tab 所等同的空格长度为 4
+set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格，（不然删除tab键需要一下）
+set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4，加上这个之后，智能自动缩进变成了4
+"set autoindent              " 继承前一行的缩进方式，特别适用于多行注释
+
+"搜索时用到的命令
+set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
+set nowrapscan              " 禁止在搜索到文件两端时重新搜索
+set incsearch               " 输入搜索内容时就显示搜索结果
+set hlsearch                " 搜索时高亮显示被找到的文本
+
+
+"-----------------------------------------------------------------
+""括号自动补全
+"-----------------------------------------------------------------
+:inoremap " ""<ESC>i
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+"向上移动是k字符，使用O表示在上一行后面增加一个空行并输入
+:inoremap { {<CR>}<ESC>O
+"<ESC>i<CR><ESC>V<O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+":inoremap < <><ESC>i
+":inoremap > <c-r>=ClosePair('>')<CR>
+":map命令，可以将键盘上的某个按键与Vim的命令绑定起来。例如使用以下命令，可以通过F5键将单词用花括号括起来：
+":map <F5> i{<Esc>ea}<Esc>，注意这里呢，因为已经{补全了，所以会多一个}
+ 
+function ClosePair(char)
+if getline('.')[col('.') - 1] == a:char
+return "\<Right>"
+else
+return a:char
+endif
+endf
+
+
+
+"返回操作系统类型(Windows, Linux等)
+function! MySys()
+    if has("win16") || has("win32") || has("win64") || has("win95")
+        return "windows"
+    elseif has("unix")
+        return "linux"
+    endif
+endfunction
+" 用户目录变量$VIMFILES
+if MySys() == "windows"
+    let $VIMFILES = $VIM.'/vimfiles'
+elseif MySys() == "linux"
+    let $VIMFILES = $HOME.'/.vim'
+endif

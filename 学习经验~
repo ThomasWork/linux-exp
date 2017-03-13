@@ -1,0 +1,66 @@
+muduo学习：
+编译例子：
+g++ echo.cc main.cc -o test
+-I/home/thomas/桌面/build/release-install/include -L/home/thomas/桌面/build/release-install/lib -lmuduo_net -lmuduo_base -lpthread
+
+杀死进程：kill -s 9 ID
+
+
+netcat：一个网络工具（以下命令可以使用nc命令替代）
+netcat -l 12345，在12345端口进行监听
+netcat localhost 12345，连接到本地12345端口
+然后它们之间就可以通信了。
+
+ps命令：
+-a  显示终端机下执行的进程，不包括bash
+a  显示终端机下的所有进程，包括其他用户的进程。
+(-A)(e)  显示所有进程。
+-f 　显示UID,PPIP,C与STIME栏位。
+(-)u 　以用户为主的格式来显示进程状况
+x 　显示所有进程，不以终端机来区分
+常用命令：
+ps -ef
+ps aux
+ps aux输出格式
+USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+USER: 进程拥有者
+PID:pid
+%CPU:占用的cpu使用率
+VSZ:占用的内存使用率
+RSS:占用的虚拟内存大小
+TTY:是否为登入者执行的程序，若为tty1-tty6，为本机登入者，若为pts/??,则为远程登入者。
+STAT:程序的状态，R:正在执行中，S：睡眠，T：正在检测或者停止，Z：死亡程序
+START:程序开始时间
+TIME:程序运行的时间
+COMMAND：所执行的指令。
+杀死僵尸进程：ps -ef | head -n 1 && ps -ef | grep defunct
+然后kill -s 9 PPID就可以了。
+可能不对：ps -t pts/6 -a，显示6号终端的所有进程
+ps -u 即可显示进程状态。
+ps -l，显示当前终端下的进程，包括bash和ps
+ps l，显示打开终端下的进程，包括bash、ps和其他终端运行的程序等。
+当ps命令找不到占用端口的进程时，可以使用下面命令找到该进程，然后杀死它
+netstat -lp | head -n 2 && netstat -lp | grep 9877
+
+
+
+head -n；可以选取前n行记录
+ps | head -1;ps | grep 'haha'：可以输出标题和匹配的内容
+find . -iname string，在当前目录查找字符串
+grep -ri string .，在当前目录下递归查找带有指定字符串的文本
+grep -ir 'str_cli(FILE' | grep "\.c"，在一行中带有.c的行
+grep -ir 'Socket' . | grep -v '=' | grep -v '[0-9]'，并且不包含=的行，并且不包含数字
+
+c语言在输出语句后面，如果有sleep，可以fflush（stdout）；
+
+ctrl-c 发送 SIGINT 信号给前台进程组中的所有进程。常用于终止正在运行的程序
+ctrl-z 发送 SIGTSTP 信号给前台进程组中的所有进程，常用于挂起一个进程,fg可以继续执行，(bg也可以，但是是放在后台）
+ctrl-d 不是发送信号，而是表示一个特殊的二进制值，表示 EOF。
+
+
+dd，然后p可以粘贴。
+
+vim
+替换当前行：   :s/a/b/g，最后加个g表示global，替换当前行的所有
+替换所有行：	:%s/a/b/g，最后加个g表示替换该行所有的。
+在用户根目录下可以建立链接：ln -s .vim/.vimrc .vimrc

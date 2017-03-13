@@ -1,0 +1,14 @@
+安装参考网页：
+
+http://blog.csdn.net/simtwo/article/details/8083598
+
+find /usr -name *boost*
+
+然后发现头文件在：/usr/include/boost
+库文件在：/usr/lib/i386-linux-gnu/等等
+
+编译的时候使用g++，使用gcc可能提示找不到库之类的。
+
+查看boost的版本：
+find /usr -name libboost_random.so*
+
